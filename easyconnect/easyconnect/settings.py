@@ -16,13 +16,14 @@ ALLOWED_HOSTS = ['*']
 
 add alias to apachee to /srv/static
 '''
-
-
+import djcelery
+import os
+from django.conf import global_settings
 # lighttpd only
 FORCE_SCRIPT_NAME = ''
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -80,7 +81,7 @@ INSTALLED_APPS = (
 	'south'
 )
 
-import djcelery
+
 djcelery.setup_loader()
 CELERY_INCLUDE = ('contentimport.importer',)
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
@@ -88,7 +89,7 @@ BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 
 
 # upload progress feedback handler
-from django.conf import global_settings 
+ 
 FILE_UPLOAD_HANDLERS = ('rest.UploadProgressCachedHandler.UploadProgressCachedHandler', ) + \
     global_settings.FILE_UPLOAD_HANDLERS
 
